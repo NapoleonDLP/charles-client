@@ -30,14 +30,19 @@ export default function Signup() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='signup-form' onSubmit={handleSubmit}>
       <label>
-        User Sign-up
+        <h1> Create Your Account </h1>
       </label>
+        First Name
         <input onChange={handleChange} type='text' name='first_name' className='form-field' placeholder='First Name' values={user.first_name} />
+        Last Name
         <input onChange={handleChange} type='text' name='last_name' className='form-field' placeholder='Last Name' values={user.last_name} />
+        Email
         <input onChange={handleChange} type='text' name='email' className='form-field' placeholder='Email' values={user.email} />
+        Slug
         <input onChange={handleChange} type='text' name='slug' className='form-field' placeholder='Slug' values={user.slug} />
+        Password
         <input onChange={handleChange} type='text' name='password' className='form-field' placeholder='Password' values={user.password} />
         {(user.first_name && user.last_name && user.email && user.password) ? <input type='submit' value='Submit'/> : null}
     </form>
