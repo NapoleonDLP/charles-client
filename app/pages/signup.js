@@ -13,8 +13,20 @@ export default function Signup() {
     setUser({...user, [event.target.name] : event.target.value});
   }
 
-  const handleSubmit = (event) => {
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    fetch('http://localhost:3001/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success: ', data)
+      })
+    .catch((error) => console.error('Error: '. error));
   }
 
   return (
@@ -27,7 +39,7 @@ export default function Signup() {
         <input onChange={handleChange} type='text' name='email' className='form-field' placeholder='Email' values={user.email} />
         <input onChange={handleChange} type='text' name='slug' className='form-field' placeholder='Slug' values={user.slug} />
         <input onChange={handleChange} type='text' name='password' className='form-field' placeholder='Password' values={user.password} />
-        <input type='submit' value='Submit'/>
+        {(user.first_name && user.last_name && user.email && user.password) ? <input type='submit' value='Submit'/> : null}
     </form>
   )
 };
