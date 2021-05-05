@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Link from 'next/link';
 
 export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,15 +36,21 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <>
       <h1>Login</h1>
-    <form className='login-form' onSubmit={handleSubmit}>
-      <label>
-        <input onChange={handleChange} placeholder='email' value={credentials.email} type='text' name='email'/>
-        <input onChange={handleChange} placeholder='Password' value={credentials.password} type='text' name='password' />
-      </label>
-      <input type='submit' name='submit' />
-    </form>
-    </div>
+      <form className='login-form' onSubmit={handleSubmit}>
+        <label>
+          <input onChange={handleChange} placeholder='Email' value={credentials.email} type='text' name='email'/>
+          <input onChange={handleChange} placeholder='Password' value={credentials.password} type='text' name='password' />
+        </label>
+        <input type='submit' name='submit' />
+      </form>
+      <small>
+        Don't have an account?
+        <Link href = '/signup' >
+          <a> Sign-up</a>
+        </Link>
+      </small>
+    </>
   )
 };

@@ -50,7 +50,7 @@ export default function Signup() {
       </form>
       <small>Already have an account?
         <Link href='/login'>
-          <a> Sign-in</a>
+          <a> Login</a>
         </Link>
       </small>
     </>
