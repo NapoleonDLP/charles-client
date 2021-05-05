@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+function Redirect({ to }) {
+  const route = useRouter();
+
+  useEffect(() => {
+    route.push(to);
+  }, [to]);
+
+  return null;
+}
 
 export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,8 +34,10 @@ export default function Login() {
     //TODO: Adjust format to conform to the state. ex string with response vs user model, Idea. Return an json and have
     //keys equal isLoggedIn and user?
     .then(user => {
-      setUser(user);
-      setIsLoggedIn(true);
+      if(user.id !== undefined) {
+        setUser(user);
+        setIsLoggedIn(true);
+      }
     })
     .catch((error) => console.error('Error: '.error))
   }
@@ -33,6 +46,10 @@ export default function Login() {
     event.preventDefault();
 
     setCredentials({...credentials,  [event.target.name]: event.target.value});
+  }
+
+  if (user) {
+    return <Redirect to='/' />
   }
 
   return (
