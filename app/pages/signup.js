@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+function Redirect({ to }) {
+  const route = useRouter();
+
+  useEffect(() => {
+    route.push(to);
+  }, [to]);
+
+  return null;
+}
 
 export default function Signup() {
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [error, setError] = useState(null);
   const [user, setUser] = useState({
     first_name: '',
     last_name: '',
@@ -15,7 +28,7 @@ export default function Signup() {
   }
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     fetch('http://localhost:3001/users', {
       method: 'POST',
       headers: {
@@ -23,11 +36,14 @@ export default function Signup() {
       },
       body: JSON.stringify(user)
     })
-    .then(response => response.json())
     .then(data => {
-        console.log('Success: ', data)
+        setIsRegistered(true);
       })
-    .catch((error) => console.error('Error: '. error));
+    .catch((error) => setError(error));
+  }
+
+  if (isRegistered) {
+    return <Redirect to='/login' />
   }
 
   return (
